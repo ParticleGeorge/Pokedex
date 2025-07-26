@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 int main() {
     std::cout << "Welcome to the modern dex...\n";
@@ -33,6 +34,31 @@ int main() {
 
         // the completed row will be added to the main vector
         csvData.push_back(row);               
+    }
+
+    // test adding to class in pokeDeclar.h
+    std::string input;
+    std::cout << "what do you wanna serach: ";
+    std::cin >> input;
+
+    bool found = false;
+
+    for (const std::vector<std::string>& row : csvData) {
+        // search for the input in the current row
+        auto locate = std::find(row.begin(), row.end(), input);
+        
+        if (locate != row.end()) {
+            std::cout << "found in row: ";
+            for (const std::string& cell : row) {
+                std::cout << cell << " ";
+            }
+            std::cout << std::endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        std::cout << "No matches found for \"" << input << "\"." << std::endl;
     }
 
     // print test to ensure CSV is being read correctly
