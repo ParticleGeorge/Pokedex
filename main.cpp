@@ -38,7 +38,7 @@ int main() {
 
     // test adding to class in pokeDeclar.h
     std::string input;
-    std::cout << "what do you wanna serach: ";
+    std::cout << "what do you wanna search: ";
     std::cin >> input;
 
     bool found = false;
