@@ -36,7 +36,7 @@ int main() {
         csvData.push_back(row);               
     }
 
-    // test adding to class in pokeDeclar.h
+    // test search adding to class in pokeDeclar.h
     std::string input;
     std::cout << "what do you wanna search: ";
     std::cin >> input;
