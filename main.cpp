@@ -5,61 +5,57 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "pokedex.h"
 
 int main() {
-    std::cout << "Welcome to the modern dex...\n";
-    std::cout << "Please wait while we set things up...\n";
+
+    // create an object from the search class
+    search pokedex;
+
+    // load in files
+    pokedex.loadFromCSV();
+
+    // variables needed for loop
+    bool online = true;
+    char userQuit;
+    std::string userStringInput;
+    int userIntInput;
     
-    // for this project we will be reading from a CSV file containing all pokemon plus their respective attributes
-    // we will begin by reading in the file
-    std::ifstream file("pokemon.csv");
 
-    // will hold each line of hte CSV file
-    std::string line;
 
-    // vector a line, within rows of of the CSV.. vector within vector
-    std::vector<std::vector<std::string>> csvData;
+    do {
+        std::cout << "Welcome to Pokedex" << std::endl;
+        std::cout << "How can I help you today?" << std::endl;
+        std::cout << "vvv Select an option below vvv " << std::endl;
+        std::cout << "1 - Search by typing anything... " << std::endl;
+        std::cout << "2 - coming later" << std::endl;
+        std::cout << "3 - coming later" << std::endl;
+        std::cout << "4 - coming later" << std::endl;
 
-    while (std::getline(file, line)) {
-        // stringsteam to split lines, cell will hold each cell in lines, row for the current row
-        std::stringstream ss(line);           
-        std::string cell;                    
-        std::vector<std::string> row;         
+        std::cin >> userIntInput;
 
-        // split the line by commas
-        while (std::getline(ss, cell, ',')) {
-            // each cell will be added to current row
-            row.push_back(cell);              
+        // add logic to check if userIntInput is a digit
+
+        switch (userIntInput) {
+            case 1:
+                std::cout << "Please enter your search request..." << std::endl;
+                std::cin >> userStringInput;
+                pokedex.genericSearch(userStringInput);
+                break;
+            case 2:
+            case 3:
+            case 4:
+            default:
+                std::cout << "Invalid option, try again." << std::endl;
+
         }
-
-        // the completed row will be added to the main vector
-        csvData.push_back(row);               
-    }
-
-    // test search adding to class in pokeDeclar.h
-    std::string input;
-    std::cout << "what do you wanna search: ";
-    std::cin >> input;
-
-    bool found = false;
-
-    for (const std::vector<std::string>& row : csvData) {
-        // search for the input in the current row
-        auto locate = std::find(row.begin(), row.end(), input);
         
-        if (locate != row.end()) {
-            std::cout << "found in row: ";
-            for (const std::string& cell : row) {
-                std::cout << cell << " ";
-            }
-            std::cout << std::endl;
-            found = true;
-        }
-    }
 
-    if (!found) {
-        std::cout << "No matches found for \"" << input << "\"." << std::endl;
-    }
+    } while (online);
+
+
+
+
 
     // print test to ensure CSV is being read correctly
     /*
