@@ -12,17 +12,14 @@ search::search() {
 // function defintions
 // loading CSV file
 void search::loadFromCSV() {
-
-    // for this project we will be reading from a CSV file containing all pokemon plus their respective attributes
-    // we will begin by reading in the file
     std::ifstream file("pokemon.csv");
-
-    // will hold each line of the CSV file
     std::string line;
 
     while (std::getline(file, line)) {
         // stringsteam to split lines, cell will hold each cell in lines, row for the current row
-        std::stringstream ss(line);                
+        std::stringstream ss(line); 
+        std::vector<std::string> row;  // made these local now
+        std::string cell;               
 
         // split the line by commas
         while (std::getline(ss, cell, ',')) {
@@ -36,18 +33,20 @@ void search::loadFromCSV() {
 }
 
 // generic search feature
-void search::genericSearch(const std::string& userInput) const {
+// changed for loops for cam :p
+void search::genericSearch(const std::string& userInput) {
     
     // will return whether something exists in the CSV could be anything
     bool found = false;
 
-    for (const std::vector<std::string>& row : csvData) {
-        // search for the input in the current row
+    for (size_t i = 0; i < csvData.size(); i++) {
+        const std::vector<std::string>& row = csvData[i];
         auto locate = std::find(row.begin(), row.end(), userInput);
         
         if (locate != row.end()) {
             std::cout << "found in row: ";
-            for (const std::string& cell : row) {
+            for (size_t j = 0; j < row.size(); j++) {
+                std::string cell = row[j];
                 std::cout << cell << " ";
             }
             std::cout << std::endl;

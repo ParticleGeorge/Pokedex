@@ -18,10 +18,6 @@ int main() {
     // variables needed for loop
     bool online = true;
     char userQuit;
-    std::string userStringInput;
-    int userIntInput;
-    
-
 
     do {
         std::cout << "Welcome to Pokedex" << std::endl;
@@ -31,17 +27,35 @@ int main() {
         std::cout << "2 - coming later" << std::endl;
         std::cout << "3 - coming later" << std::endl;
         std::cout << "4 - coming later" << std::endl;
+        std::cout << "5 - Type 'exit' to quit" << std::endl;
 
-        std::cin >> userIntInput;
+        // get user input as a full line
+        std::string userInputLine;
+        std::getline(std::cin, userInputLine);
 
-        // add logic to check if userIntInput is a digit
+        // check for exit
+        if (userInputLine == "exit") {
+            online = false;
+            continue;
+        }
+
+        // added logic to check if userIntInput is a digit, used ss to read from string
+        int userIntInput;
+        std::stringstream ss(userInputLine);
+        if (!(ss >> userIntInput)) {
+            std::cout << "Erorr, please enter a digit or type in exit." << std::endl;
+            continue;
+        }
 
         switch (userIntInput) {
-            case 1:
+            case 1: {
                 std::cout << "Please enter your search request..." << std::endl;
-                std::cin >> userStringInput;
+                std::string userStringInput;
+                std::getline(std::cin, userStringInput);
+                // std::cout << "DEBUG: user entered: '" << userStringInput << "'" << std::endl;
                 pokedex.genericSearch(userStringInput);
                 break;
+            }
             case 2:
             case 3:
             case 4:
@@ -53,7 +67,8 @@ int main() {
 
     } while (online);
 
-
+    // exit
+    std::cout << "Program is now exiting... " << std::endl;
 
 
 
@@ -68,6 +83,7 @@ int main() {
     }
     */
 
+    // g++ -g main.cpp pokedex.cpp -o main.exe
 
     return 0;
 }

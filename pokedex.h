@@ -12,12 +12,10 @@ class search {
         search();
 
         // loading CSV function & additional search functions
-        void loadFromCSV();
-        void genericSearch(const std::string& userInput) const; 
+        void loadFromCSV(); 
+        void genericSearch(const std::string& userInput); 
 
     private: 
-        std::string cell;                                  // each cell in CSV
-        std::vector<std::string> row;                      // each row in CSV
         std::vector<std::vector<std::string>>    csvData;    // entire CSV row by row
 
 };
