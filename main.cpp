@@ -58,6 +58,8 @@ int main() {
                 break;
             }
             case 2:
+                std::cout << "Print Pokemon information" << std::endl;
+                std::cout << "Which Pokemon would you like to print?" << std::endl;
             case 3:
             case 4:
             default:
