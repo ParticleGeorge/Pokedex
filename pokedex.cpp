@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
+#include <cctype>  
 
 // constructor
 search::search() {
@@ -23,7 +24,8 @@ void search::loadFromCSV() {
 
         // split the line by commas
         while (std::getline(ss, cell, ',')) {
-            // each cell will be added to current row
+            // each cell will be added to current row & convert to lowercase
+            std::transform(cell.begin(), cell.end(), cell.begin(), ::tolower);
             row.push_back(cell);              
         }
 
@@ -33,20 +35,21 @@ void search::loadFromCSV() {
 }
 
 // generic search feature
-// changed for loops for cam :p
 void search::genericSearch(const std::string& userInput) {
     
     // will return whether something exists in the CSV could be anything
     bool found = false;
 
-    for (size_t i = 0; i < csvData.size(); i++) {
-        const std::vector<std::string>& row = csvData[i];
+    // convert user input into lower case, will check for match with CSV (converted loadCSV as well)
+    std::string userInputCopy = userInput;
+    std::transform(userInputCopy.begin(), userInputCopy.end(), userInputCopy.begin(), ::tolower);
+
+    for (const std::vector<std::string>& row : csvData) {
         auto locate = std::find(row.begin(), row.end(), userInput);
         
         if (locate != row.end()) {
             std::cout << "found in row: ";
-            for (size_t j = 0; j < row.size(); j++) {
-                std::string cell = row[j];
+            for (const std::string& cell : row) {
                 std::cout << cell << " ";
             }
             std::cout << std::endl;

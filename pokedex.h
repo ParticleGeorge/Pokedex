@@ -16,7 +16,7 @@ class search {
         void genericSearch(const std::string& userInput); 
 
     private: 
-        std::vector<std::vector<std::string>>    csvData;    // entire CSV row by row
+        std::vector<std::vector<std::string>> csvData;    // entire CSV row by row
 
 };
 
