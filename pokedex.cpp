@@ -35,7 +35,8 @@ void search::loadFromCSV() {
 }
 
 // generic search feature
-void search::genericSearch(const std::string& userInput) {
+// adjust this function to return 
+void search::searchByName(const std::string& userInput) {
     
     // will return whether something exists in the CSV could be anything
     bool found = false;

@@ -13,33 +13,18 @@ class search {
 
         // loading CSV function & additional search functions
         void loadFromCSV(); 
-        void genericSearch(const std::string& userInput); 
+        void searchByName(const std::string& userInput); 
 
     private: 
         std::vector<std::vector<std::string>> csvData;    // entire CSV row by row
 
 };
 
-class print {
+class Pokemon {
     public:
         // constructor
-        print();
-
-        // setters
-        // #,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp. Def,Speed,Generation,Legendary
-        void setNumber(int pokeNumber);  
-        void setName(std::string pokeName);
-        void setType1(std::string pokeType1);
-        void setType2(std::string pokeType2);
-        void setTotal(int pokeTotal);  
-        void setHP(int pokeHP);  
-        void setAttack(int pokeAttack);  
-        void setDefense(int pokeDefense);  
-        void setSpatk(int pokeSpatk);  
-        void setSpdef(int pokeSpdef);  
-        void setSpeed(int pokeSpeed);  
-        void setGen(int pokeGen);  
-        void setLegend(int pokeLegend);  
+        Pokemon(int number, const std::string& name, const std::string& type1, const std::string& type2,
+                int total, int hp, int attack, int defense, int spatk, int spdef, int speed, int gen, bool legend);
 
         // getters
         int getNumber() const;
@@ -55,15 +40,12 @@ class print {
         int getSpeed() const;
         int getGen() const;
         bool isLegendary() const;
-
-        // print function
-        void printPokemon();
+        
 
     private:
         int number, total, hp, attack, defense, spatk, spdef, speed, generation;
         bool legendary;
         std::string name, type1, type2;
 };
-
 
 #endif // POKEDEX_H
