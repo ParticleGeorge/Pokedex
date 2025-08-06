@@ -4,48 +4,35 @@
 #include <vector>
 #include <string>
 
-// main class that will contain all the search functions
-// eventually will be adding different ways to search for the user
-class search {
-    public:
-        // constructor 
-        search();
+// class for a single pokemon 
+class Pokemon {
+public:
+    // constructor
+    Pokemon();
+    Pokemon(int number, const std::string& name, const std::string& type1, const std::string& type2,
+            int total, int hp, int attack, int defense, int spatk, int spdef, int speed, int gen, bool legend);
 
-        // loading CSV function & additional search functions
-        void loadFromCSV(); 
-        void searchByName(const std::string& userInput); 
-
-    private: 
-        std::vector<std::vector<std::string>> csvData;    // entire CSV row by row
+    // printing single pokemon + getName for search
+    void printPokemon() const;
+    std::string getName() const;
+        
+private:
+    int number, total, hp, attack, defense, spatk, spdef, speed, generation;
+    bool legendary;
+    std::string name, type1, type2;
 
 };
 
-class Pokemon {
-    public:
-        // constructor
-        Pokemon(int number, const std::string& name, const std::string& type1, const std::string& type2,
-                int total, int hp, int attack, int defense, int spatk, int spdef, int speed, int gen, bool legend);
+// class that manages all pokemon
+class Pokedex {
+public:
+    void loadFromCSV();
+    void searchByName(const std::string& name) const;
 
-        // getters
-        int getNumber() const;
-        std::string getName() const;
-        std::string getType1() const;
-        std::string getType2() const;
-        int getTotal() const;
-        int getHP() const;
-        int getAttack() const;
-        int getDefense() const;
-        int getSpatk() const;
-        int getSpdef() const;
-        int getSpeed() const;
-        int getGen() const;
-        bool isLegendary() const;
-        
+private:
+    // using for csvData
+    std::vector<Pokemon> pokedex;
 
-    private:
-        int number, total, hp, attack, defense, spatk, spdef, speed, generation;
-        bool legendary;
-        std::string name, type1, type2;
 };
 
 #endif // POKEDEX_H

@@ -5,14 +5,90 @@
 #include <algorithm>
 #include <cctype>  
 
-// constructor
-search::search() {
+// default constructor
+Pokemon::Pokemon() {}
+
+// function definitions for Pokemon class
+// creating pokemon object
+Pokemon::Pokemon(int number, const std::string& name, const std::string& type1, const std::string& type2,
+                 int total, int hp, int attack, int defense, int spatk, int spdef,
+                 int speed, int gen, bool legend) 
+{
+    // using this-> because I will be using the same names for members and parameters
+    this->number = number;
+    this->name = name;
+    this->type1 = type1;
+    this->type2 = type2;
+    this->total = total;
+    this->hp = hp;
+    this->attack = attack;
+    this->defense = defense;
+    this->spatk = spatk;
+    this->spdef = spdef;
+    this->speed = speed;
+    this->generation = gen;
+    this->legendary = legend;
+}
+
+// print individual pokemon info
+void Pokemon::printPokemon() const {
+
+    // for bool getter
+    std::string isLegendary;
+    if (legendary) {
+        isLegendary = "Yes";
+    } 
+    else {
+        isLegendary = "No";
+    }
+
+    std::cout << "Name: " << name << std::endl
+              << "Number: " << number << std::endl
+              << "Type 1: " << type1 << std::endl
+              << "Type 2: " << type2 << std::endl
+              << "Total: " << total << std::endl
+              << "HP: " << hp << std::endl
+              << "Attack: " << attack << std::endl
+              << "Defense: " << defense << std::endl
+              << "Sp. Atk: " << spatk << std::endl
+              << "Sp. Def: " << spdef << std::endl
+              << "Speed: " << speed << std::endl
+              << "Generation: " << generation << std::endl
+              << "Legendary: " << isLegendary << std::endl;
+}
+
+// using this for search later on below
+std::string Pokemon::getName() const {
+    return name;
+}
+
+// function definitions for Pokedex class
+
+/*
+
+Work in progress
+
+*/
+void Pokedex::loadFromCSV() {
 
 }
 
-// function defintions
+void Pokedex::searchByName(const std::string& name) const {
+
+}
+
+
+
+
+
+
+
+/* ----> redoing all of this
+
+
+
 // loading CSV file
-void search::loadFromCSV() {
+void Pokemon::loadFromCSV() {
     std::ifstream file("pokemon.csv");
     std::string line;
 
@@ -36,7 +112,7 @@ void search::loadFromCSV() {
 
 // generic search feature
 // adjust this function to return 
-void search::searchByName(const std::string& userInput) {
+void Pokemon::searchByName(const std::string& userInput) {
     
     // will return whether something exists in the CSV could be anything
     bool found = false;
@@ -62,3 +138,5 @@ void search::searchByName(const std::string& userInput) {
         std::cout << "No matches found for: " << userInput <<  std::endl;
     }
 }
+
+*/

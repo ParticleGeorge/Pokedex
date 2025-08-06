@@ -8,6 +8,14 @@
 #include <cctype>  
 #include "pokedex.h"
 
+
+/*
+
+have not adjusted main for new classes and implentations other than pokedex object
+
+
+*/
+
 bool isValidName(const std::string& input) {
     // checking for character validation when asking for pokemon
     for (int i = 0; i < input.length(); i++) {
@@ -21,8 +29,8 @@ bool isValidName(const std::string& input) {
 
 int main() {
 
-    // create an object from the search class
-    search pokedex;
+    // create an object from the Pokemon class
+    Pokedex pokedex;
 
     // load in files
     pokedex.loadFromCSV();
@@ -36,11 +44,8 @@ int main() {
         std::cout << "How can I help you today?" << std::endl;
         std::cout << "vvv Select an option below vvv " << std::endl;
         std::cout << "1 - Search by Pokemon name... " << std::endl;
-        std::cout << "2 - coming later" << std::endl;
-        std::cout << "3 - coming later" << std::endl;
-        std::cout << "4 - coming later" << std::endl;
-        std::cout << "5 - Type 'exit' to quit" << std::endl;
-
+        std::cout << "2 - Type 'exit' to quit" << std::endl;
+ 
         // get user input as a full line
         std::string userInputLine;
         std::getline(std::cin, userInputLine);
@@ -74,7 +79,7 @@ int main() {
                 }
 
                 // std::cout << "DEBUG: user entered: '" << userStringInput << "'" << std::endl;
-                pokedex.genericSearch(userStringInput);
+                pokedex.searchByName(userStringInput);
                 break;
             }
             case 2:
