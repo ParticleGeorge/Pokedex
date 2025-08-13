@@ -12,14 +12,25 @@ public:
     Pokemon(int number, const std::string& name, const std::string& type1, const std::string& type2,
             int total, int hp, int attack, int defense, int spatk, int spdef, int speed, int gen, bool legend);
 
-    // printing single pokemon + getName for search
-    void printPokemon() const;
+    // getters
+    int getNumber() const;
     std::string getName() const;
+    std::string getType1() const;
+    std::string getType2() const;
+    int getTotal() const;
+    int getHP() const;
+    int getAttack() const;
+    int getDefense() const;
+    int getSpatk() const;
+    int getSpdef() const;
+    int getSpeed() const;
+    int getGen() const;
+    bool getLegend() const;
         
 private:
-    int number, total, hp, attack, defense, spatk, spdef, speed, generation;
-    bool legendary;
-    std::string name, type1, type2;
+    int _number, _total, _hp, _attack, _defense, _spatk, _spdef, _speed, _generation;
+    bool _legendary;
+    std::string _name, _type1, _type2;
 
 };
 
@@ -28,6 +39,8 @@ class Pokedex {
 public:
     void loadFromCSV();
     void searchByName(const std::string& name) const;
+    void printPokemon() const;
+    std::string getName() const;
 
 private:
     // using for csvData

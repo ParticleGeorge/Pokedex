@@ -14,52 +14,91 @@ Pokemon::Pokemon(int number, const std::string& name, const std::string& type1, 
                  int total, int hp, int attack, int defense, int spatk, int spdef,
                  int speed, int gen, bool legend) 
 {
-    // using this-> because I will be using the same names for members and parameters
-    this->number = number;
-    this->name = name;
-    this->type1 = type1;
-    this->type2 = type2;
-    this->total = total;
-    this->hp = hp;
-    this->attack = attack;
-    this->defense = defense;
-    this->spatk = spatk;
-    this->spdef = spdef;
-    this->speed = speed;
-    this->generation = gen;
-    this->legendary = legend;
+    // assign member variables
+    _number = number;
+    _name = name;
+    _type1 = type1;
+    _type2 = type2;
+    _total = total;
+    _hp = hp;
+    _attack = attack;
+    _defense = defense;
+    _spatk = spatk;
+    _spdef = spdef;
+    _speed = speed;
+    _generation = gen;
+    _legendary = legend;
+}
+
+// getter definitions
+int Pokemon::getNumber() const { 
+    return _number; 
+}
+std::string Pokemon::getName() const { 
+    return _name; 
+}
+std::string Pokemon::getType1() const { 
+    return _type1; 
+}
+std::string Pokemon::getType2() const { 
+    return _type2; 
+}
+int Pokemon::getTotal() const { 
+    return _total; 
+}
+int Pokemon::getHP() const { 
+    return _hp; 
+}
+int Pokemon::getAttack() const { 
+    return _attack; 
+}
+int Pokemon::getDefense() const { 
+    return _defense; 
+}
+int Pokemon::getSpatk() const { 
+    return _spatk; 
+}
+int Pokemon::getSpdef() const { 
+    return _spdef; 
+}
+int Pokemon::getSpeed() const { 
+    return _speed; 
+}
+int Pokemon::getGen() const { 
+    return _generation; 
+}
+bool Pokemon::getLegend() const { 
+    return _legendary; 
 }
 
 // print individual pokemon info
-void Pokemon::printPokemon() const {
 
-    // for bool getter
-    std::string isLegendary;
-    if (legendary) {
-        isLegendary = "Yes";
-    } 
-    else {
-        isLegendary = "No";
-    }
+/*
 
-    std::cout << "Name: " << name << std::endl
-              << "Number: " << number << std::endl
-              << "Type 1: " << type1 << std::endl
-              << "Type 2: " << type2 << std::endl
-              << "Total: " << total << std::endl
-              << "HP: " << hp << std::endl
-              << "Attack: " << attack << std::endl
-              << "Defense: " << defense << std::endl
-              << "Sp. Atk: " << spatk << std::endl
-              << "Sp. Def: " << spdef << std::endl
-              << "Speed: " << speed << std::endl
-              << "Generation: " << generation << std::endl
+reworking print to take in specific name and print from there
+next task ^^^
+
+*/
+void Pokedex::printPokemon() const {
+
+    std::cout << "Name: " << _name << std::endl
+              << "Number: " << _number << std::endl
+              << "Type 1: " << _type1 << std::endl
+              << "Type 2: " << _type2 << std::endl
+              << "Total: " << _total << std::endl
+              << "HP: " << _hp << std::endl
+              << "Attack: " << _attack << std::endl
+              << "Defense: " << _defense << std::endl
+              << "Sp. Atk: " << _spatk << std::endl
+              << "Sp. Def: " << _spdef << std::endl
+              << "Speed: " << _speed << std::endl
+              << "Generation: " << _generation << std::endl
               << "Legendary: " << isLegendary << std::endl;
 }
 
 // using this for search later on below
-std::string Pokemon::getName() const {
-    return name;
+std::string Pokedex::getName() const {
+    return _name;
 }
 
 // function definitions for Pokedex class
