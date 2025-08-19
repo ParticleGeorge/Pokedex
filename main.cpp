@@ -8,14 +8,6 @@
 #include <cctype>  
 #include "pokedex.h"
 
-
-/*
-
-have not adjusted main for new classes and implentations other than pokedex object
-
-
-*/
-
 bool isValidName(const std::string& input) {
     // checking for character validation when asking for pokemon
     for (int i = 0; i < input.length(); i++) {
@@ -35,13 +27,9 @@ int main() {
     // load in files
     pokedex.loadFromCSV();
 
-    // variables needed for loop
-    bool online = true;
-    char userQuit;
-
-    do {
+ 
+    while(true) {
         std::cout << "Welcome to Pokedex" << std::endl;
-        std::cout << "How can I help you today?" << std::endl;
         std::cout << "vvv Select an option below vvv " << std::endl;
         std::cout << "1 - Search by Pokemon name... " << std::endl;
         std::cout << "2 - Type 'exit' to quit" << std::endl;
@@ -52,8 +40,7 @@ int main() {
 
         // check for exit
         if (userInputLine == "exit") {
-            online = false;
-            continue;
+            break;
         }
 
         // added logic to check if userIntInput is a digit, used ss to read from string
@@ -67,8 +54,6 @@ int main() {
         switch (userIntInput) {
             case 1: {
                 std::cout << "Please enter the name of the Pokemon..." << std::endl;
-                std::cout << "If there is a match, the Pokemon's information" << std::endl;
-                std::cout << "will be printed to the screen!" << std::endl;
                 std::string userStringInput;
                 std::getline(std::cin, userStringInput);
 
@@ -78,36 +63,21 @@ int main() {
                     break;
                 }
 
-                // std::cout << "DEBUG: user entered: '" << userStringInput << "'" << std::endl;
+                std::transform(userStringInput.begin(), userStringInput.end(), userStringInput.begin(), ::tolower);
                 pokedex.searchByName(userStringInput);
                 break;
             }
-            case 2:
-            case 3:
-            case 4:
             default:
                 std::cout << "Invalid option, try again." << std::endl;
 
         }
         
 
-    } while (online);
+    } 
 
     // exit
     std::cout << "Program is now exiting... " << std::endl;
 
-
-
-    // print test to ensure CSV is being read correctly
-    /*
-    for (const std::vector<std::string>& row : csvData) {
-        // prints cell for current row all in one line
-        for (const std::string& cell : row) {
-            std::cout << cell << " ";         
-        }
-        std::cout << std::endl; // continue to next line in main vector       
-    }
-    */
 
     // g++ -g main.cpp pokedex.cpp -o main.exe
 

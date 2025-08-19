@@ -39,8 +39,7 @@ class Pokedex {
 public:
     void loadFromCSV();
     void searchByName(const std::string& name) const;
-    void printPokemon() const;
-    std::string getName() const;
+    void printPokemon(const Pokemon& p) const;
 
 private:
     // using for csvData

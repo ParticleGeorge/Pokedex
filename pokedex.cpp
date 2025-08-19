@@ -16,9 +16,13 @@ Pokemon::Pokemon(int number, const std::string& name, const std::string& type1, 
 {
     // assign member variables
     _number = number;
+    // lowercase from here
     _name = name;
+    std::transform(_name.begin(), _name.end(), _name.begin(), ::tolower);
     _type1 = type1;
+    std::transform(_type1.begin(), _type1.end(), _type1.begin(), ::tolower);
     _type2 = type2;
+    std::transform(_type2.begin(), _type2.end(), _type2.begin(), ::tolower);
     _total = total;
     _hp = hp;
     _attack = attack;
@@ -71,111 +75,81 @@ bool Pokemon::getLegend() const {
     return _legendary; 
 }
 
-// print individual pokemon info
-
-/*
-
-reworking print to take in specific name and print from there
-next task ^^^
-
-*/
-void Pokedex::printPokemon() const {
-
-    std::cout << "Name: " << _name << std::endl
-              << "Number: " << _number << std::endl
-              << "Type 1: " << _type1 << std::endl
-              << "Type 2: " << _type2 << std::endl
-              << "Total: " << _total << std::endl
-              << "HP: " << _hp << std::endl
-              << "Attack: " << _attack << std::endl
-              << "Defense: " << _defense << std::endl
-              << "Sp. Atk: " << _spatk << std::endl
-              << "Sp. Def: " << _spdef << std::endl
-              << "Speed: " << _speed << std::endl
-              << "Generation: " << _generation << std::endl
-              << "Legendary: " << isLegendary << std::endl;
-}
-
-// using this for search later on below
-std::string Pokedex::getName() const {
-    return _name;
-}
-
 // function definitions for Pokedex class
 
-/*
+void Pokedex::printPokemon(const Pokemon& pokemon) const {
 
-Work in progress
-
-*/
-void Pokedex::loadFromCSV() {
-
+    std::cout << "Printing..." << std::endl;
+    std::cout << "Name: " << pokemon.getName() << std::endl
+              << "Number: " << pokemon.getNumber() << std::endl
+              << "Type 1: " << pokemon.getType1() << std::endl
+              << "Type 2: " << pokemon.getType2() << std::endl
+              << "Total: " << pokemon.getTotal() << std::endl
+              << "HP: " << pokemon.getHP() << std::endl
+              << "Attack: " << pokemon.getAttack() << std::endl
+              << "Defense: " << pokemon.getDefense() << std::endl
+              << "Sp. Atk: " << pokemon.getSpatk() << std::endl
+              << "Sp. Def: " << pokemon.getSpdef() << std::endl
+              << "Speed: " << pokemon.getSpeed() << std::endl
+              << "Generation: " << pokemon.getGen() << std::endl
+              << "Legendary: " << pokemon.getLegend() << std::endl;
 }
 
 void Pokedex::searchByName(const std::string& name) const {
+    std::string loweredName = name;
+    std::transform(loweredName.begin(), loweredName.end(), loweredName.begin(), ::tolower);
 
-}
-
-
-
-
-
-
-
-/* ----> redoing all of this
-
-
-
-// loading CSV file
-void Pokemon::loadFromCSV() {
-    std::ifstream file("pokemon.csv");
-    std::string line;
-
-    while (std::getline(file, line)) {
-        // stringsteam to split lines, cell will hold each cell in lines, row for the current row
-        std::stringstream ss(line); 
-        std::vector<std::string> row;  // made these local now
-        std::string cell;               
-
-        // split the line by commas
-        while (std::getline(ss, cell, ',')) {
-            // each cell will be added to current row & convert to lowercase
-            std::transform(cell.begin(), cell.end(), cell.begin(), ::tolower);
-            row.push_back(cell);              
-        }
-
-        // the completed row will be added to the main vector
-        csvData.push_back(row);   
-    }
-}
-
-// generic search feature
-// adjust this function to return 
-void Pokemon::searchByName(const std::string& userInput) {
-    
-    // will return whether something exists in the CSV could be anything
-    bool found = false;
-
-    // convert user input into lower case, will check for match with CSV (converted loadCSV as well)
-    std::string userInputCopy = userInput;
-    std::transform(userInputCopy.begin(), userInputCopy.end(), userInputCopy.begin(), ::tolower);
-
-    for (const std::vector<std::string>& row : csvData) {
-        auto locate = std::find(row.begin(), row.end(), userInput);
+    for(int i = 0; i < pokedex.size(); i++) {
+        std::string pokeName = pokedex[i].getName();
         
-        if (locate != row.end()) {
-            std::cout << "found in row: ";
-            for (const std::string& cell : row) {
-                std::cout << cell << " ";
-            }
-            std::cout << std::endl;
-            found = true;
+        // lowercase
+        std::transform(pokeName.begin(), pokeName.end(), pokeName.begin(), ::tolower);
+        
+        if (pokeName == loweredName) {
+            printPokemon(pokedex[i]);
+            return;
         }
+
     }
 
-    if (!found) {
-        std::cout << "No matches found for: " << userInput <<  std::endl;
+    std::cout << "Erro: could not find Pokemon. " << name << std::endl;
+}
+
+void Pokedex::loadFromCSV() {
+    std::ifstream file("pokemon.csv");
+    if (!file.is_open()) {
+        std::cout << "Error: file could not be opened" << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string cell;
+        std::vector<std::string> row;
+
+        while(std::getline(ss, cell, ',')) {
+            row.push_back(cell);
+        }
+
+        // going to convert to ints here for value comparison later
+        int number = std::stoi(row[0]);
+        std::string name = row[1];
+        std::string type1 = row[2];
+        std::string type2 = row[3];
+        int total = std::stoi(row[4]);
+        int hp = std::stoi(row[5]);
+        int attack = std::stoi(row[6]);
+        int defense = std::stoi(row[7]);
+        int spatk = std::stoi(row[8]);
+        int spdef = std::stoi(row[9]);
+        int speed = std::stoi(row[10]);
+        int generation = std::stoi(row[11]);
+        bool legendary = (row[12] == "True" || row[12] == "true" || row[12] == "1");
+
+        // create pokemon object and push it back
+        Pokemon indiPoke(number, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary);
+        pokedex.push_back(indiPoke);
     }
 }
 
-*/
