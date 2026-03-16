@@ -19,6 +19,24 @@ bool isValidName(const std::string& input) {
     return !input.empty();
 }
 
+void handleNameSearch(const Pokedex& pokedex) {
+    // moved the name search logic into a separate function for better readability
+    std::cout << "Please enter the name of the Pokemon..." << std::endl;
+
+    std::string userStringInput;
+    std::getline(std::cin, userStringInput);
+
+    if (!isValidName(userStringInput)) {
+        std::cout << "Error, please enter letters, spaces, or hyphens only." << std::endl;
+        return;
+    }
+
+    std::transform(userStringInput.begin(), userStringInput.end(),
+                   userStringInput.begin(), ::tolower);
+
+    pokedex.searchByName(userStringInput);
+}
+
 int main() {
 
     // create an object from the Pokedex class
@@ -55,32 +73,19 @@ int main() {
         std::cin.ignore(10000, '\n');
 
         switch (choice) {
-            case 1: {
-                std::cout << "Please enter the name of the Pokemon..." << std::endl;
-                std::string userStringInput;
-                std::getline(std::cin, userStringInput);
-
-                // make sure his is a string entered
-                if (!isValidName(userStringInput)) {
-                    std::cout << "Error, please enter letters only." << std::endl;
-                    break;
-                }
-
-                std::transform(userStringInput.begin(), userStringInput.end(), userStringInput.begin(), ::tolower);
-                pokedex.searchByName(userStringInput);
+            case 1:
+                handleNameSearch(pokedex);
                 break;
-            }
+            case 0:
+                std::cout << "Program is now exiting... " << std::endl;
+                return 0;
             default:
                 std::cout << "Invalid option, try again." << std::endl;
-
         }
-        
-
     } 
 
     // exit
     std::cout << "Program is now exiting... " << std::endl;
-
 
     // g++ -g main.cpp pokedex.cpp -o main.exe
 
