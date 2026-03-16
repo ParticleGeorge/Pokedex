@@ -99,20 +99,62 @@ void Pokedex::searchByName(const std::string& name) const {
     std::string loweredName = name;
     std::transform(loweredName.begin(), loweredName.end(), loweredName.begin(), ::tolower);
 
-    for(int i = 0; i < pokedex.size(); i++) {
-        std::string pokeName = pokedex[i].getName();
-        
-        // lowercase
-        std::transform(pokeName.begin(), pokeName.end(), pokeName.begin(), ::tolower);
-        
-        if (pokeName == loweredName) {
+    // First, look for an exact match
+    for (size_t i = 0; i < pokedex.size(); i++) {
+        if (pokedex[i].getName() == loweredName) {
             printPokemon(pokedex[i]);
             return;
         }
-
     }
 
-    std::cout << "Erro: could not find Pokemon. " << name << std::endl;
+    // Collect partial matches
+    std::vector<const Pokemon*> matches;
+
+    for (size_t i = 0; i < pokedex.size(); i++) {
+        if (pokedex[i].getName().find(loweredName) != std::string::npos) {
+            matches.push_back(&pokedex[i]);
+        }
+    }
+
+    // No matches
+    if (matches.size() == 0) {
+        std::cout << "Error: could not find any Pokemon matching \"" 
+                  << name << "\"." << std::endl;
+        return;
+    }
+
+    // One match
+    if (matches.size() == 1) {
+        std::cout << "Found one partial match:\n";
+        printPokemon(*matches[0]);
+        return;
+    }
+
+    // Multiple matches
+    std::cout << "Multiple matches found:\n";
+    for (size_t i = 0; i < matches.size(); i++) {
+        std::cout << i + 1 << " - " << matches[i]->getName() << std::endl;
+    }
+
+    std::cout << "Enter the number of the Pokemon you want: ";
+    int choice;
+    std::cin >> choice;
+
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
+        std::cout << "Invalid input." << std::endl;
+        return;
+    }
+
+    std::cin.ignore(10000, '\n');
+
+    if (choice < 1 || choice > static_cast<int>(matches.size())) {
+        std::cout << "Invalid selection." << std::endl;
+        return;
+    }
+
+    printPokemon(*matches[choice - 1]);
 }
 
 void Pokedex::loadFromCSV() {

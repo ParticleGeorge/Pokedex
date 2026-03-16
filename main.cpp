@@ -28,9 +28,6 @@ void handleNameSearch(const Pokedex& pokedex) {
         return;
     }
 
-    std::transform(userStringInput.begin(), userStringInput.end(),
-                   userStringInput.begin(), ::tolower);
-
     pokedex.searchByName(userStringInput);
 }
 
