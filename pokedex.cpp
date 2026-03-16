@@ -117,12 +117,17 @@ void Pokedex::searchByName(const std::string& name) const {
 
 void Pokedex::loadFromCSV() {
     std::ifstream file("pokemon.csv");
+
     if (!file.is_open()) {
         std::cout << "Error: file could not be opened" << std::endl;
         return;
     }
 
     std::string line;
+
+    // Skip header row
+    std::getline(file, line);
+
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string cell;
@@ -132,24 +137,37 @@ void Pokedex::loadFromCSV() {
             row.push_back(cell);
         }
 
-        // going to convert to ints here for value comparison later
-        int number = std::stoi(row[0]);
-        std::string name = row[1];
-        std::string type1 = row[2];
-        std::string type2 = row[3];
-        int total = std::stoi(row[4]);
-        int hp = std::stoi(row[5]);
-        int attack = std::stoi(row[6]);
-        int defense = std::stoi(row[7]);
-        int spatk = std::stoi(row[8]);
-        int spdef = std::stoi(row[9]);
-        int speed = std::stoi(row[10]);
-        int generation = std::stoi(row[11]);
-        bool legendary = (row[12] == "True" || row[12] == "true" || row[12] == "1");
+        // Make sure the row has enough columns
+        if (row.size() < 13) {
+            std::cout << "Warning: skipped invalid row: " << line << std::endl;
+            continue;
+        }
 
-        // create pokemon object and push it back
-        Pokemon indiPoke(number, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary);
-        pokedex.push_back(indiPoke);
+         try {
+            // going to convert to ints here for value comparison later
+            int number = std::stoi(row[0]);
+            std::string name = row[1];
+            std::string type1 = row[2];
+            std::string type2 = row[3];
+            int total = std::stoi(row[4]);
+            int hp = std::stoi(row[5]);
+            int attack = std::stoi(row[6]);
+            int defense = std::stoi(row[7]);
+            int spatk = std::stoi(row[8]);
+            int spdef = std::stoi(row[9]);
+            int speed = std::stoi(row[10]);
+            int generation = std::stoi(row[11]);
+            bool legendary = (row[12] == "True" || row[12] == "true" || row[12] == "1");
+
+            // create pokemon object and push it back
+            Pokemon indiPoke(number, name, type1, type2, total, hp, attack,
+                             defense, spatk, spdef, speed, generation, legendary);
+
+            pokedex.push_back(indiPoke);
+        }
+        catch (const std::exception& e) {
+            std::cout << "Warning: skipped malformed row: " << line << std::endl;
+        }
     }
 }
 

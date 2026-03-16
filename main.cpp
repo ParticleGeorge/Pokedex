@@ -1,8 +1,5 @@
 // main file for pokedex
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include <string>
 #include <algorithm>
 #include <cctype>  
