@@ -10,7 +10,7 @@
 
 bool isValidName(const std::string& input) {
     // checking for character validation when asking for pokemon
-    for (int i = 0; i < input.length(); i++) {
+    for (size_t i = 0; i < input.length(); i++) {
         char c = input[i];
         if (!std::isalpha(c) && c != ' ' && c != '-') {
             return false;
@@ -21,7 +21,7 @@ bool isValidName(const std::string& input) {
 
 int main() {
 
-    // create an object from the Pokemon class
+    // create an object from the Pokedex class
     Pokedex pokedex;
 
     // load in files
@@ -29,29 +29,32 @@ int main() {
 
  
     while(true) {
-        std::cout << "Welcome to Pokedex" << std::endl;
-        std::cout << "vvv Select an option below vvv " << std::endl;
-        std::cout << "1 - Search by Pokemon name... " << std::endl;
-        std::cout << "2 - Type 'exit' to quit" << std::endl;
- 
-        // get user input as a full line
-        std::string userInputLine;
-        std::getline(std::cin, userInputLine);
+        std::cout << "\nWelcome to the Pokedex\n";
+        std::cout << "1 - Search by Pokemon name\n";
+        /* WIP
+        std::cout << "2 - Search by Pokemon type\n";
+        std::cout << "3 - Search by Pokemon generation\n";
+        std::cout << "4 - Search by Pokemon legendary status\n";  
+        std::cout << "5 - Show random Pokemon\n";
+        */
+        std::cout << "0 - Exit\n";
 
-        // check for exit
-        if (userInputLine == "exit") {
-            break;
-        }
+        // cleaner input handling
+        int choice;
 
-        // added logic to check if userIntInput is a digit, used ss to read from string
-        int userIntInput;
-        std::stringstream ss(userInputLine);
-        if (!(ss >> userIntInput)) {
-            std::cout << "Erorr, please enter a digit or type in exit." << std::endl;
+        std::cout << "Enter option: ";
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            std::cin.clear();             
+            std::cin.ignore(10000, '\n'); 
+            std::cout << "Invalid input.\n";
             continue;
         }
 
-        switch (userIntInput) {
+        std::cin.ignore(10000, '\n');
+
+        switch (choice) {
             case 1: {
                 std::cout << "Please enter the name of the Pokemon..." << std::endl;
                 std::string userStringInput;
